@@ -1,3 +1,4 @@
+import inspect
 from pathlib import Path
 
 from katsudon.conf import settings
@@ -10,6 +11,13 @@ class App:
         self.module = self.submodule()
         self._commands = None
         self._routes = None
+        self._path = None
+
+    @property
+    def path(self):
+        if self._path is None:
+            self._path = Path(self.module.__file__).parent
+        return self._path
 
     def submodule(self, *parts, froms=None):
         if froms is None:
@@ -44,11 +52,25 @@ class App:
                 self._routes = routes.routes
         return self._routes
 
+    def find_data(self, *path):
+        return self.path.joinpath(*path)
+
 
 class Registry:
     apps = [App(app) for app in settings.apps]
+    app_by_name = None
+    app_by_shortname = None
 
     @classmethod
     def commands(cls):
         return {app.shortname: app.commands
                 for app in cls.apps if app.commands}
+
+    @classmethod
+    def current_app(cls):
+        caller_fr = inspect.getouterframes(inspect.currentframe(), 2)[1]
+        caller_mod = caller_fr.frame.f_globals["__name__"]
+        for app in cls.apps:
+            if caller_mod.startswith(app.modname):
+                return app
+        return None

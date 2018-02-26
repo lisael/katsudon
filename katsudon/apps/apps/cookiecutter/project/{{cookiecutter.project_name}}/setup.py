@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='katsudon',
+    name='{{cookiecutter.project_name}}',
     version='0.1',
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     include_package_data=True,
@@ -13,6 +13,7 @@ setup(
         'sqlalchemy',
         'colorama',
         'cookiecutter',
+        'setuptools',
         'pyyaml'
     ],
     entry_points='''
@@ -20,3 +21,4 @@ setup(
         katsudon=katsudon.cli:cli
     ''',
 )
+

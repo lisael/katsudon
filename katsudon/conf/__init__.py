@@ -5,6 +5,7 @@ settings = ModuleType('katsudon.conf.settings')
 settings.apps = [
     'katsudon.apps.migrations',
     'katsudon.apps.http',
+    'katsudon.apps.apps'
 ]
 
 settings.http = ModuleType('katsudon.conf.settings.http')

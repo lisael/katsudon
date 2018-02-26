@@ -9,6 +9,9 @@ from katsudon.conf import settings
 from katsudon.apps.apps.registry import Registry
 
 
+def packagify(name):
+    return name.strip().replace('-', "_")
+
 class CreateProject(Command):
     """
     Create a Katsudon project
@@ -20,5 +23,9 @@ class CreateProject(Command):
 
     def __call__(self, name):
         tmpl_dir = Registry.current_app().find_data("cookiecutter", "project")
-        cookiecutter(str(tmpl_dir), no_input=True, extra_context=dict(project_name=name))
+        extra = dict(
+            project_name = name,
+            package_name = packagify(name)
+        )
+        cookiecutter(str(tmpl_dir), no_input=True, extra_context=extra)
 

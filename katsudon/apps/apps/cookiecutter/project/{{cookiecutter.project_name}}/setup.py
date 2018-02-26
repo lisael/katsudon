@@ -6,19 +6,11 @@ setup(
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     include_package_data=True,
     install_requires=[
-        'click',
-        'aiohttp',
-        'asyncpg',
-        'psycopg2',
-        'sqlalchemy',
-        'colorama',
-        'cookiecutter',
-        'setuptools',
-        'pyyaml'
+        "katsudon",
     ],
     entry_points='''
         [console_scripts]
-        katsudon=katsudon.cli:cli
+        {{cookiecutter.package_name}}={{cookiecutter.package_name}}.cli:cli
     ''',
 )
 

@@ -1,0 +1,8 @@
+port:
+  type: int
+  default: 8080
+
+host:
+  type: string
+  default: localhost
+

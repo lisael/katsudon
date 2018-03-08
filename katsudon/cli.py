@@ -5,7 +5,10 @@ from colorama import Fore, Style
 from pathlib import Path
 
 
-CONTEXT_SETTINGS = dict(auto_envvar_prefix='KATSUDON')
+
+__cmd_name__ = sys.argv[0]
+
+CONTEXT_SETTINGS = dict(auto_envvar_prefix=__cmd_name__.upper())
 
 
 class Context(object):
@@ -145,7 +148,7 @@ class KatsudonCLI(click.MultiCommand):
               help='Enables verbose mode.')
 @pass_context
 def cli(ctx, verbose, settings):
-    """A complex command line interface."""
+    """Katsudon CLI tool"""
     ctx.verbose = verbose
     if settings is not None:
-        os.environ["KATSUDON_SETTINGS"] = settings
+        os.environ[__cmd_name__.upper() + "_SETTINGS"] = settings

@@ -13,7 +13,7 @@ setup(
         'sqlalchemy',
         'colorama',
         'cookiecutter',
-        'pyyaml'
+        'pyaml'
     ],
     entry_points='''
         [console_scripts]

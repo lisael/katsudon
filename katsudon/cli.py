@@ -5,8 +5,8 @@ from colorama import Fore, Style
 from pathlib import Path
 
 
+__cmd_name__ = os.path.basename(sys.argv[0])
 
-__cmd_name__ = sys.argv[0]
 
 CONTEXT_SETTINGS = dict(auto_envvar_prefix=__cmd_name__.upper())
 
@@ -111,9 +111,12 @@ class KatsudonCLI(click.MultiCommand):
         self.cmd_modules = {}
 
     def list_commands(self, ctx):
+        settings_file = ctx.params.get("settings")
+        if settings_file is not None:
+            os.environ[__cmd_name__.upper() + "_SETTINGS"] = settings_file.name
         from katsudon.conf import settings
         rv = []
-        for app in settings.apps:
+        for app in settings.katsudon.apps:
             try:
                 mod = __import__(app + ".commands", None, None, [""])
                 name = Path(mod.__file__).parent.parent.name
@@ -137,7 +140,10 @@ class KatsudonCLI(click.MultiCommand):
         def grp(ctx):
             pass
 
-        grp.short_help = module.__doc__.lstrip()
+        try:
+            grp.short_help = module.__doc__.lstrip()
+        except AttributeError:
+            warnings.warn("Add a docstring to %s to generate command help." % module.__file__)
         grp.module = module
         return grp
 

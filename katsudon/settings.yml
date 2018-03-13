@@ -1,0 +1,5 @@
+apps:
+  type: list(str)
+  default:
+    - katsudon.apps.apps
+    - katsudon.apps.settings

@@ -13,3 +13,6 @@ settings.http = ModuleType('katsudon.conf.settings.http')
 
 settings.http.port = 8080
 settings.http.host = "127.0.0.1"
+
+from katsudon.apps.settings import load_settings
+settings = load_settings()

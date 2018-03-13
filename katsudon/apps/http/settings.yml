@@ -3,6 +3,6 @@ port:
   default: 8080
 
 host:
-  type: string
+  type: str
   default: localhost
 
